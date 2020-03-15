@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import firebase, { db } from '../firebase.js';
-import { getUserFromFirebase } from '../helpers/common';
+import { getUserFromFirebase } from '../helpers';
 import { RankingContext } from '../contexts/RankingContext';
 import Ranking from './Ranking';
 import GameReport from './GameReport';
@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 
 function Page() {
   const { state, dispatch } = useContext(RankingContext);
+  const [savingPlayer, isSavingPlayer] = useState(false);
 
   useEffect(() => {
     listenAuthChanges();
@@ -26,28 +27,34 @@ function Page() {
   const fetchPlayers = () => {
     if (!state.playersFetched) {
       db()
-      .collection('probar-players')
-      .get()
-      .then(snap => {
-        let players = [];
-        snap.forEach(doc => {
-          players.push(doc.data());
-        });
-        dispatch({ type: 'SET_PLAYERS', players });
-      })
-      .catch(error => console.log('ERROR', error));
+        .collection('probar-players')
+        .get()
+        .then(snap => {
+          let players = [];
+          snap.forEach(doc => {
+            players.push(doc.data());
+          });
+          dispatch({ type: 'SET_PLAYERS', players });
+          if (savingPlayer) {
+            isSavingPlayer(false);
+          }
+        })
+        .catch(error => console.log('ERROR', error));
     }
-  }
+  };
 
-  const checkFirstLogin = () => {
+  const checkFirstLogin = async () => {
     if (
       state.playersFetched &&
       state.user &&
+      state.user.email &&
+      !savingPlayer &&
       !state.players.find(p => p.email === state.user.email)
-    ) {
+      ) {
+      isSavingPlayer(true);
       db()
         .collection('probar-players')
-        .add(state.user)
+        .add({ ...state.user, score: 0, ranking: 10000 })
         .then(() => console.log('first login, adding you to the database'))
         .catch(error => console.log('ERROR', error));
     }
@@ -56,6 +63,7 @@ function Page() {
   const setLogin = u => {
     const user = getUserFromFirebase(u);
     dispatch({ type: 'SET_USER', user });
+    fetchPlayers();
   };
 
   const login = () => {
@@ -73,7 +81,9 @@ function Page() {
 
   const logout = () => {
     firebase.auth().signOut();
+    dispatch({type: 'LOGOUT'});
   };
+
   return !!state.user ? (
     <div className="page">
       <button onClick={logout}>Sair</button>
@@ -82,7 +92,11 @@ function Page() {
       <Ranking />
     </div>
   ) : (
-    <button onClick={login}>Login</button>
+    <div>
+      <button onClick={login}>Login</button>
+      <Navbar />
+      <Ranking />
+    </div>
   );
 }
 

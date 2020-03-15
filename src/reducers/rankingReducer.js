@@ -1,5 +1,3 @@
-import uuid from 'uuid/v4';
-
 export const initialState = {
   players: [],
   games: [],
@@ -11,7 +9,11 @@ export const initialState = {
 
 export const rankingReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_GAME':
+    case 'LOGOUT':
+      return {
+        ...state,
+        user: null
+      }
     case 'SET_PLAYERS':
       return {
         ...state,

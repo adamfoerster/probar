@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './Player.css';
-import { RankingContext } from '../contexts/RankingContext';
 
 const Player = ({ player }) => {
-  const { dispatch } = useContext(RankingContext);
   return (
     <div className="card">
       <div className="avatar">
@@ -14,7 +12,7 @@ const Player = ({ player }) => {
           {player.ranking} - {player.displayName}
         </h2>
         <span>{player.email}</span>
-        <h3>{player.score}</h3>
+        <h3>Pontos: {player.score}</h3>
       </div>
     </div>
   );
