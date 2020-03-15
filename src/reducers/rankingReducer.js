@@ -1,6 +1,13 @@
 import uuid from 'uuid/v4';
 
-export const initialState = { players: [], games: [], user: null, playersFetched: false };
+export const initialState = {
+  players: [],
+  games: [],
+  user: null,
+  playersFetched: false,
+  team1: {score: 0, player1: null, player2: null},
+  team2: {score: 0, player1: null, player2: null}
+};
 
 export const rankingReducer = (state, action) => {
   switch (action.type) {
@@ -15,6 +22,16 @@ export const rankingReducer = (state, action) => {
       return {
         ...state,
         user: action.user
+      };
+    case 'SET_TEAM1':
+      return {
+        ...state,
+        team1: action.team
+      };
+    case 'SET_TEAM2':
+      return {
+        ...state,
+        team2: action.team
       };
     // case "ADD_BOOK":
     //   return {

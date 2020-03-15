@@ -1,18 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { RankingContext } from '../contexts/RankingContext';
 
-function Team({ players, num, setTeam }) {
+function Team({ players, num }) {
+  const { state, dispatch } = useContext(RankingContext);
   const [score, setScore] = useState(0);
-  const [player1, setPlayer1] = useState(null);
-  const [player2, setPlayer2] = useState(null);
   const scoreRef = React.createRef();
   const p1 = React.createRef();
   const p2 = React.createRef();
 
   useEffect(() => {
-    p1.current.addEventListener('change', e => setPlayer1(e.target.value));
-    p2.current.addEventListener('change', e => setPlayer2(e.target.value));
-    // setTeam({score, player1, player2});
+    p1.current.addEventListener('change', e =>
+      setTeam('player1', e.target.value)
+    );
+    p2.current.addEventListener('change', e =>
+      setTeam('player2', e.target.value)
+    );
   });
+
+  const setTeam = (field, value) => {
+    const team = {
+      ...state[`team${num}`],
+      [field]: value
+    };
+    if (field === 'score') {
+      setScore(value);
+    }
+    if (state[`team${num}`][field] !== value) {
+      dispatch({ type: `SET_TEAM${num}`, team });
+    }
+  };
 
   return (
     <div className="team">
@@ -23,11 +39,11 @@ function Team({ players, num, setTeam }) {
         className="score"
         placeholder="placar"
         value={score}
-        onChange={e => setScore(e.target.value)}
+        onChange={e => setTeam('score', e.target.value)}
         onFocus={e => scoreRef.current.select()}
         tabIndex={num}
       ></input>
-      <high-select animated search value={player1} ref={p1} tabIndex={num + 1}>
+      <high-select animated search ref={p1} tabIndex={num + 1}>
         <high-option key="0" selected>
           Escolha um jogador
         </high-option>
@@ -39,13 +55,15 @@ function Team({ players, num, setTeam }) {
           );
         })}
       </high-select>
-      <high-select animated search value={player2} ref={p2} tabIndex={num + 3}>
+      <high-select animated search ref={p2} tabIndex={num + 3}>
         <high-option key="0" selected>
           Escolha um jogador
         </high-option>
         {players.map(player => {
           return (
-            <high-option key={player.email}>{player.displayName}</high-option>
+            <high-option key={player.email} value={player.email}>
+              {player.displayName}
+            </high-option>
           );
         })}
       </high-select>
