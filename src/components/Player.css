@@ -1,0 +1,12 @@
+.avatar img {
+  width: 100px;
+  max-height: 150px;
+}
+
+.info {
+  padding-left: 1rem;
+}
+
+.info h2, .info h3 {
+  margin: 0;
+}

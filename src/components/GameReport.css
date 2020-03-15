@@ -1,0 +1,24 @@
+.game-report {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.team {
+  flex-grow: 1;
+}
+.team:first-child {
+  margin-right: 1rem;
+}
+
+.score {
+  font-size: 3em;
+  padding: 2em;
+  box-sizing: border-box;
+  width: 5rem;
+  text-align: center;
+}
+
+high-select {
+  display: block;
+  margin: 1rem 0;
+}
