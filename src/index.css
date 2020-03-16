@@ -67,7 +67,7 @@ button {
   box-shadow: 0 0 2em #aaa;
   border: 0;
   padding: 6px 20px;
-  display: block;
+  display: inline-block;
   cursor: pointer;
 }
 
