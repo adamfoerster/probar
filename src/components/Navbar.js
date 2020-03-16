@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RankingContext } from "../contexts/RankingContext";
+import { Title } from "../styles";
 import { updateRanking } from "../helpers";
 import firebase, { db } from "../firebase.js";
 import { getUserFromFirebase } from "../helpers";
@@ -16,7 +17,6 @@ const Navbar = () => {
 
   useEffect(() => {
     listenAuthChanges();
-    fetchPlayers();
     checkFirstLogin();
   });
 
@@ -24,6 +24,7 @@ const Navbar = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user && !state.user) {
         setLogin(user);
+        fetchPlayers();
       }
     });
   };
@@ -41,17 +42,17 @@ const Navbar = () => {
         .collection("probar-players")
         .add({ ...state.user, score: 0, ranking: 10000 })
       await updateRanking();  
+      await fetchPlayers();
     }
   };
 
   const fetchPlayers = () => {
-    if (!state.playersFetched) {
       db()
         .collection("probar-players")
         .get()
-        .then(snap => {
+        .then(snaps => {
           let players = [];
-          snap.forEach(doc => {
+          snaps.forEach(doc => {
             players.push(doc.data());
           });
           dispatch({ type: "SET_PLAYERS", players });
@@ -60,7 +61,6 @@ const Navbar = () => {
           }
         })
         .catch(error => console.log("ERROR", error));
-    }
   };
 
   const login = () => {
@@ -90,7 +90,7 @@ const Navbar = () => {
       ) : (
         <button onClick={login}>Login</button>
       )}
-      <h1>Pro Bari Ranking</h1>
+      <Title>Pro Bari Ranking</Title>
       <p>Atualmente temos {state.players.length} jogadores no ranking.</p>
     </div>
   );
