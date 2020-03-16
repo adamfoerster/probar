@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { RankingContext } from "../contexts/RankingContext";
+import { updateRanking } from "../helpers";
 import firebase, { db } from "../firebase.js";
 import { getUserFromFirebase } from "../helpers";
 
@@ -36,11 +37,10 @@ const Navbar = () => {
       !state.players.find(p => p.email === state.user.email)
     ) {
       isSavingPlayer(true);
-      db()
+      await db()
         .collection("probar-players")
         .add({ ...state.user, score: 0, ranking: 10000 })
-        .then(() => console.log("first login, adding you to the database"))
-        .catch(error => console.log("ERROR", error));
+      await updateRanking();  
     }
   };
 
