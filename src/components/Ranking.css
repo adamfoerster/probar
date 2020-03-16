@@ -1,3 +1,13 @@
 .ranking {
-  padding: 1rem 0;
+  margin: 1rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+h2, h3, span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

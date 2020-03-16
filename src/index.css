@@ -1,64 +1,48 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Nunito", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #553055;
+  font-size: 16px;
+  background: url("/imgs/soccer-stadium-small.jpg");
+  background-size: cover;
+  background-position: center center;
 }
-.App{
-  background: #4c2a4c;
+
+h1 {
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+
+h1, h2, h3 {
+  text-transform: uppercase;
+}
+
+.App {
+  /* background: #4c2a4c; e9c646 f3e87c*/
+  background: linear-gradient(162.18deg, #989898 -57.42%, #161616 142.07%),
+    #d9d6d6;
   margin: 20px auto;
   width: 90%;
   max-width: 700px;
   color: #eee;
 }
-.navbar{
+.navbar {
   padding: 10px 20px;
   text-align: center;
-  background: #6d3d6d
 }
-.navbar h1{
+.navbar h1 {
   margin: 10px 0;
 }
-
-.book-list{
-  margin: 20px;
-}
-.book-list ul{
-  padding: 0;
-  list-style-type: none;
-}
-.book-list li{
-  background: #6d3d6d;
-  border-radius: 4px;
-  padding: 10px;
-  cursor: pointer;
-  margin: 10px 0;
-}
-.book-list li:hover{
-  opacity: 0.7;
-  text-decoration: line-through;
-}
-.book-list .title{
-  font-weight: bold;
-  color: #fff;
-  font-size: 1.2em;
-}
-.book-list .author{
-  font-size: 0.9em;
-  color: #ddd;
-}
-.empty{
+.empty {
   margin: 20px;
   text-align: center;
 }
 
-form{
+form {
   padding: 20px;
 }
-input[type='text']{
+input[type="text"] {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
@@ -68,27 +52,46 @@ input[type='text']{
   border: 0;
   cursor: pointer;
 }
-input[type='submit'], button{
-  margin: 10px auto;
-  background: #eee;
+input[type="submit"],
+button {
+  font-weight: 700;
+  margin: 1rem 0;
+  padding: 2em 0;
+  border-radius: 2em;
+  background: radial-gradient(
+      106.78% 106.78% at 50% 40.93%,
+      #e9c646 100%,
+      #f3e87c 0%
+    ),
+    #d9d6d6;
+  box-shadow: 0 0 2em #aaa;
   border: 0;
   padding: 6px 20px;
   display: block;
+  cursor: pointer;
+}
+
+input[type="submit"]:disabled,
+button:disabled {
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .card {
   display: flex;
-  margin: 1rem 0;
+  margin: 1rem;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 high-select {
   color: #333;
 }
 :root {
-  --caller-color: #aaa; 
+  --caller-color: #aaa;
   --caller-border-radius: 0;
   --caller-shadow: none;
   --bigot-shadow: none;
   /* --input-color: black; */
-  --caller-background:  #3c1f3c;
+  --caller-background: #3c1f3c;
 }

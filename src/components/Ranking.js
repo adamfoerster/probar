@@ -7,7 +7,6 @@ const Ranking = () => {
   const { state } = useContext(RankingContext);
   return state.players.length ? (
     <div className="ranking">
-      <ul>
         {state.players
           .sort((a, b) => {
             if (a.score > b.score) return -1;
@@ -17,7 +16,6 @@ const Ranking = () => {
           .map(player => {
             return <Player player={player} key={player.email} />;
           })}
-      </ul>
     </div>
   ) : (
     <div className="empty">Nenhum jogador no ranking ainda :).</div>

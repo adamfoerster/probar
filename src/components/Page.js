@@ -70,7 +70,7 @@ function Page() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth()
-      .signInWithPopup(provider)
+      .signInWithRedirect(provider)
       .then(user => {
         if (user) {
           setLogin(user);
